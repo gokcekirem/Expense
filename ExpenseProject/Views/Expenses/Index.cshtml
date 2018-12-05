@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Data.Expense>
+
+@{
+    ViewBag.Title = "Expenses";
+}
+
+<h2>Expenses</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Expense Description
+        </th>
+        <th>
+            User Email
+        </th>
+        
+        <th>
+            Notification Status
+        </th>
+        <th>
+           Notification Date
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+          Rejection Reason
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.IsNotificationSent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NotificationDate)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpenseStatus.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RejectionReason)
+        </td>
+        <td>
+            @{var space = " | ";}
+            @if (item.ExpenseStatus.Id == 0)
+            {
+                @Html.ActionLink("Send", "Send", new { id = item.Id })
+                @space.ToString();
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                @space.ToString();
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id });
+                @space.ToString();
+            }
+            else if (item.ExpenseStatus.Id == 1)
+            {
+                @Html.ActionLink("Delete", "DeleteStatus", new { id = item.Id });
+                @space.ToString();
+            }
+            else if (item.ExpenseStatus.Id == 2)
+            {
+                @Html.ActionLink("Delete", "DeleteStatus", new { id = item.Id });
+                @space.ToString();
+            }
+            else if (item.ExpenseStatus.Id == 3)
+            {
+                @Html.ActionLink("Send", "Send", new { id = item.Id })
+                @space.ToString();
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                @space.ToString();
+            }
+            else if (item.ExpenseStatus.Id == 4)
+            {
+               
+            }
+            else if (item.ExpenseStatus.Id == 5)
+            {
+                @Html.ActionLink("Delete", "DeleteStatus", new { id = item.Id });
+                @space.ToString();
+            }
+
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("History", "ExpenseHistoryIndex", new { id = item.Id })
+        </td>
+
+
+        </tr>
+}
+
+</table>
+
+

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Data.Expense>
+
+@{
+    ViewBag.Title = "Expenses that wait payment";
+}
+
+<h2>Expenses</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("expenseStatus",ViewBag.expenseStatus as List<SelectListItem>, ViewBag.selected as String, new
+{
+    onchange = @"CallChangefunc(this.value)"
+})
+}
+
+
+<script>
+function CallChangefunc(val)
+{
+    window.location.href = "/ExpensesForAccounting/?statusId=" + val;
+}
+</script>
+
+    <table class="table">
+        <tr>
+            <th>
+                Expense Description
+            </th>
+            <th>
+                User Email
+            </th>
+
+            <th>
+                Notification Status
+            </th>
+            <th>
+                Notification Date
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Rejection Reason
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsNotificationSent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NotificationDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseStatus.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RejectionReason)
+                </td>
+                <td>
+                    @{var space = " | ";}
+                    @if (item.ExpenseStatus.Id == 2)
+                    {
+                        @Html.ActionLink("Pay", "Pay", new { id = item.Id })
+                        @space.ToString();
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("History", "ExpenseHistoryIndex", new { id = item.Id })
+                </td>
+
+
+            </tr>
+        }
+
+    </table>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Data.ExpenseHistory>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Expense History</h2>
+
+<p>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Modify Date
+        </th>
+        <th>
+            Expense
+        </th>
+        <th>
+           Rejection Reason
+        </th>
+        <th>
+           Modified By
+        </th>
+        <th>
+            User Email
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifyDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RejectionReason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Expense.AspNetUsers.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpenseStatus.Description)
+        </td>
+        <td>
+        </td>
+    </tr>
+}
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

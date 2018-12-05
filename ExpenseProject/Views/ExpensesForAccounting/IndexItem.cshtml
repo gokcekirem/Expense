@@ -1,0 +1,58 @@
+﻿@model ExpenseProject.Models.ExpenseItemModel
+
+@{
+    ViewBag.Title = "Expense Details";
+}
+
+<h2>Expense Details</h2>
+<p>
+  
+
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Expense
+            </th>
+            <th>
+                Item
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenseItem.FirstOrDefault().Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenseItem.FirstOrDefault().Amount)
+            </th>
+            <th></th>
+        </tr>
+        @{decimal a=0;}
+        @foreach (var item in Model.ExpenseItem)
+        {
+            a = a + item.Amount;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expense.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @{var date = item.Date.ToShortDateString();}
+                    @Html.DisplayFor(modelItem => date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount) TL
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <p>
+        Total Amount: @a TL
+    </p>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
