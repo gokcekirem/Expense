@@ -1,0 +1,17 @@
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\TimerForManager.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Topshelf.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Topshelf.Log4Net.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Topshelf.NLog.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Topshelf.Rehab.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Topshelf.Supervise.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\obj\Debug\TimerForManager.csprojResolveAssemblyReference.cache
+C:\Projects\vs-project\ExpenseProject\TimerForManager\obj\Debug\TimerForManager.pdb
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\TimerForManager.exe.config
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\TimerForManager.exe
+C:\Projects\vs-project\ExpenseProject\TimerForManager\obj\Debug\TimerForManager.exe
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\EntityFramework.dll
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\EntityFramework.xml
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Data.dll
+C:\Projects\vs-project\ExpenseProject\TimerForManager\bin\Debug\Data.pdb

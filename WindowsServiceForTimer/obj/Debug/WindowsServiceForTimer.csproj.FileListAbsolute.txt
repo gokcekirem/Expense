@@ -1,0 +1,16 @@
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\WindowsServiceForTimer.exe.config
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\WindowsServiceForTimer.exe
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\WindowsServiceForTimer.pdb
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\Data.dll
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\EntityFramework.dll
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\Topshelf.dll
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\Data.pdb
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\EntityFramework.xml
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\bin\Debug\Topshelf.pdb
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\obj\Debug\WindowsServiceForTimer.csprojResolveAssemblyReference.cache
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\obj\Debug\WindowsServiceForTimer.exe
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\obj\Debug\WindowsServiceForTimer.pdb
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\obj\Debug\WindowsServiceForTimer.ProjectInstaller.resources
+C:\Projects\vs-project\ExpenseProject\WindowsServiceForTimer\obj\Debug\WindowsServiceForTimer.csproj.GenerateResource.Cache
