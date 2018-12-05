@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -8,13 +8,19 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
 using ExpenseProject.Models;
+using Data;
+using System.Net.Mail;
+using System.Text;
 
 namespace ExpenseProject.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private ExpenseEntities db = ExpenseEntities.Instance;
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -79,6 +85,12 @@ namespace ExpenseProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (Helper.IsManager(Helper.GetUserID(model.Email)))
+                        returnUrl = "/ExpensesForManager";
+                    else if (Helper.IsAccounting(Helper.GetUserID(model.Email)))
+                        returnUrl = "/ExpensesForAccounting";
+                    else
+                        returnUrl = "/Expenses";
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -136,8 +148,16 @@ namespace ExpenseProject.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Manager")]
         public ActionResult Register()
+        {
+            ViewBag.UserRole = new SelectList(db.AspNetRoles, "Id", "Name") as IEnumerable<SelectListItem>;
+            ViewBag.AspNetUserRoles = new SelectList(db.AspNetRoles, "Id", "Name");
+            //ViewBag.StatusId = new SelectList(db.ExpenseStatus, "Id", "Description");
+            return View();
+        }
+
+        public ActionResult Successful()
         {
             return View();
         }
@@ -145,33 +165,77 @@ namespace ExpenseProject.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            var aspNetUserRoles = new AspNetUserRoles();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //create the user role
+                    aspNetUserRoles.RoleId = model.UserRole;
 
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                    aspNetUserRoles.UserId = user.Id;
+                    db.AspNetUserRoles.Add(aspNetUserRoles);
+                    db.SaveChanges();
+                    
+                    // yeni register olan kişiye bilgilerini mail atsın
+                    // bool mail = await SendEmail(user);
+
+                    return RedirectToAction("Successful", "Account");
+                 }
+                    AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.UserRole = new SelectList(db.AspNetUserRoles, "Id", "Email") as IEnumerable<SelectListItem>;
             return View(model);
         }
+        public async Task<bool> SendEmail(ApplicationUser newUser)
+        {
+            string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"];
+            string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"];
 
+
+            string code = await UserManager.GeneratePasswordResetTokenAsync(newUser.Id);
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = newUser.Id, code = code }, protocol: Request.Url.Scheme);
+            //await UserManager.SendEmailAsync(newUser.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            client.EnableSsl = true;
+            client.Timeout = 100000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(senderEmail, senderPassword);
+
+            string subject = "New Registration";
+            string body = "You have been registered. Please create your password by clicking < a href =\"" + callbackUrl + "\">here</a>";
+            MailMessage mailMessage = new MailMessage(senderEmail, newUser.Email, subject, body);
+            mailMessage.IsBodyHtml = true;
+            mailMessage.BodyEncoding = UTF8Encoding.UTF8;
+            mailMessage.SubjectEncoding = UTF8Encoding.UTF8;
+
+            try
+            {
+                client.Send(mailMessage);
+                ViewBag.Message = "A mail has been sent to the employee";
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ViewBag.Message = "Failure to send mail";
+                return false;
+            }
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -211,10 +275,10 @@ namespace ExpenseProject.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -392,7 +456,7 @@ namespace ExpenseProject.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //
@@ -449,7 +513,8 @@ namespace ExpenseProject.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+           return RedirectToAction("Index", "Expenses");
+           
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
