@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4f43bab325414a36b813f62d28289947" Name="Diagram1" ZoomLevel="52">
+        <EntityTypeShape EntityType="ExpenseModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ExpenseModel.AspNetRoles" Width="1.5" PointX="15.25" PointY="1.875" />
+        <EntityTypeShape EntityType="ExpenseModel.AspNetUserClaims" Width="1.5" PointX="20.125" PointY="10.25" />
+        <EntityTypeShape EntityType="ExpenseModel.AspNetUserLogins" Width="1.5" PointX="18.25" PointY="13" />
+        <EntityTypeShape EntityType="ExpenseModel.AspNetUserRoles" Width="1.5" PointX="15.5" PointY="4.75" />
+        <EntityTypeShape EntityType="ExpenseModel.AspNetUsers" Width="1.5" PointX="15.875" PointY="7.5" />
+        <EntityTypeShape EntityType="ExpenseModel.Expense" Width="1.5" PointX="11.125" PointY="7.625" />
+        <EntityTypeShape EntityType="ExpenseModel.ExpenseHistory" Width="1.5" PointX="13.75" PointY="13.375" />
+        <EntityTypeShape EntityType="ExpenseModel.ExpenseItem" Width="1.5" PointX="8.125" PointY="7.125" />
+        <EntityTypeShape EntityType="ExpenseModel.ExpenseStatus" Width="1.5" PointX="13.625" PointY="10.5" />
+        <EntityTypeShape EntityType="ExpenseModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="ExpenseModel.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" />
+        <AssociationConnector Association="ExpenseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ExpenseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ExpenseModel.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ExpenseModel.FK__Expense__UserId__0D44F85C" />
+        <AssociationConnector Association="ExpenseModel.FK__ExpenseHi__Modif__531856C7" />
+        <AssociationConnector Association="ExpenseModel.FK__Expense__StatusI__0E391C95" />
+        <AssociationConnector Association="ExpenseModel.FK__ExpenseHi__Expen__540C7B00" />
+        <AssociationConnector Association="ExpenseModel.FK__ExpenseIt__Expen__1DB06A4F" />
+        <AssociationConnector Association="ExpenseModel.FK__ExpenseHi__Statu__55009F39" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
